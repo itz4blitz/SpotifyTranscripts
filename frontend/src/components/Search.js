@@ -9,7 +9,7 @@ export default function Search({
   handleUpdateTime,
   generateTimestamp,
 }) {
-  const [query, setQuery] = useState("");
+  const [query] = useState("");
   const [result, setResult] = useState([]);
 
   function search(word) {
@@ -18,7 +18,7 @@ export default function Search({
       let index = row.sentence.toLowerCase().search(word);
 
       if (index === -1) {
-        return;
+        return null;
       }
 
       let obj = {
@@ -30,8 +30,9 @@ export default function Search({
       };
 
       tmp.push(obj);
-      setResult(tmp);
+      return obj;
     });
+    setResult(tmp);
   }
 
   useEffect(() => {
@@ -46,9 +47,9 @@ export default function Search({
       };
 
       tmp.push(obj);
-
-      setResult(tmp);
+      return obj;
     });
+    setResult(tmp);
   }, [transcript]);
 
   return (

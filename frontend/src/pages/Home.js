@@ -1,8 +1,9 @@
 import overview from "../images/overview.png";
 
 export default function Home() {
-  const CLIENT_ID = process.env.REACT_APP_SPOTFY_CLIENT_ID;
-  const REDIRECT_URI = "http://localhost:3000/discover";
+  const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+  console.log("Spotify Client ID:", CLIENT_ID); // Debug log
+  const REDIRECT_URI = "http://localhost:3001/discover";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
 
@@ -26,8 +27,7 @@ export default function Home() {
         <div className="col-span-3">
           <img
             src={overview}
-            autoPlay
-            muted
+            alt="Spotify Transcripts application overview"
             className="rounded-lg shadow border-2 border-black"
           />
         </div>

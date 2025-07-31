@@ -3,7 +3,6 @@ import { Tooltip } from "react-tooltip";
 import {
   faChevronLeft,
   faFileLines,
-  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
@@ -49,6 +48,7 @@ export default function Jumbotron({
             <img
               className="w-52 shadow-2xl rounded-xl aspect-square"
               src={episode?.images[0].url}
+              alt={episode?.name || "Podcast episode cover"}
             />
             <div className="text-white  ">
               <p className="text-sm  font-normal">Podcast episode</p>

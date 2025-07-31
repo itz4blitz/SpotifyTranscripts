@@ -14,7 +14,7 @@ export default function Sentence({
       const element = document.getElementById(startTime);
       scrollIntoSentence(element);
     }
-  }, [time]);
+  }, [time, currentSentence, scrollIntoSentence, startTime]);
 
   return (
     <h1

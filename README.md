@@ -75,7 +75,7 @@ Spotify’s API does not allow you to download full podcast episodes, only 30 se
 Create a .env file in the root directory and add your API keys:
 
 ```
-REACT_APP_SPOTFY_CLIENT_ID=YOUR_SPOTIFY_CLIENT_ID_GOES_HERE
+REACT_APP_SPOTIFY_CLIENT_ID=YOUR_SPOTIFY_CLIENT_ID_GOES_HERE
 REACT_APP_OPEN_AI_KEY=YOUR_OPEN_AI_KEY_GOES_HERE
 ```
 

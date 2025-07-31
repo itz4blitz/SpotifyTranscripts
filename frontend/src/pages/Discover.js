@@ -55,7 +55,7 @@ export default function Discover() {
             state={episode}
             className="max-w-sm rounded-md overflow-hidden shadow-lg bg-spotifyMediumGray hover:bg-spotifyLightGray p-3.5"
           >
-            <img className="w-full rounded" src={episode.images[0].url} />
+            <img className="w-full rounded" src={episode.images[0].url} alt={episode.name} />
             <div className="pt-3">
               <h1 className="font-medium text-lg mb-1 overflow-ellipsis overflow-hidden whitespace-nowrap">
                 {episode.name}
