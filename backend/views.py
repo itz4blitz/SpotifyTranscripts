@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, Response
 from . import db
 from .models import Podcast
+from .rss_finder import PodcastRSSFinder
 import os 
 import speech_recognition as sr 
 import requests
@@ -62,6 +63,67 @@ def get_podcast_progress():
             yield f"data: {json.dumps({'status': 'error', 'error': str(e)})}\n\n"
     
     return Response(generate(), mimetype='text/plain')
+
+@main.route("/search_podcast_rss", methods=["POST"])
+def search_podcast_rss():
+    """Search for podcast RSS feeds by name"""
+    try:
+        data = request.get_json()
+        podcast_name = data.get('name', '').strip()
+        
+        if not podcast_name:
+            return jsonify({"error": "Podcast name is required"}), 400
+        
+        finder = PodcastRSSFinder()
+        results = finder.find_by_name(podcast_name)
+        
+        return jsonify({
+            "results": results,
+            "count": len(results)
+        }), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@main.route("/validate_rss", methods=["POST"])
+def validate_rss():
+    """Validate an RSS feed and return episode info"""
+    try:
+        data = request.get_json()
+        rss_url = data.get('rss_url', '').strip()
+        
+        if not rss_url:
+            return jsonify({"error": "RSS URL is required"}), 400
+        
+        finder = PodcastRSSFinder()
+        validation_result = finder.validate_feed(rss_url)
+        
+        return jsonify(validation_result), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@main.route("/get_episode_from_rss", methods=["POST"])
+def get_episode_from_rss():
+    """Get specific episode audio URL from RSS feed"""
+    try:
+        data = request.get_json()
+        rss_url = data.get('rss_url', '').strip()
+        episode_title = data.get('episode_title', '').strip()
+        
+        if not rss_url:
+            return jsonify({"error": "RSS URL is required"}), 400
+        
+        finder = PodcastRSSFinder()
+        episode_info = finder.get_episode_audio_url(rss_url, episode_title)
+        
+        if episode_info:
+            return jsonify(episode_info), 200
+        else:
+            return jsonify({"error": "No episode found with audio"}), 404
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 r = sr.Recognizer()
